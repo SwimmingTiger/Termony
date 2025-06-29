@@ -11,12 +11,13 @@ all: download/glib
 	cd temp/glib && echo "ar = '${OHOS_SDK_HOME}/native/llvm/bin/llvm-ar'" >> cross.txt
 	cd temp/glib && echo "ld = '${OHOS_SDK_HOME}/native/llvm/bin/ld.lld'" >> cross.txt
 	cd temp/glib && echo "strip = '${OHOS_SDK_HOME}/native/llvm/bin/llvm-strip'" >> cross.txt
+	cd temp/glib && echo "pkg-config = 'pkg-config'" >> cross.txt
 	cd temp/glib && echo "[host_machine]" >> cross.txt
 	cd temp/glib && echo "system = 'linux'" >> cross.txt
 	cd temp/glib && echo "cpu_family = 'aarch64'" >> cross.txt
 	cd temp/glib && echo "cpu = 'aarch64'" >> cross.txt
 	cd temp/glib && echo "endian = 'little'" >> cross.txt
-	cd temp/glib && meson --cross-file cross.txt --prefix=/ -Dselinux=false -Dinstalled_tests=false -Ddtrace=disabled -Dsystemtap=disabled -Dselinux=disabled -Dlibelf=disabled -Dlibmount=disabled build
+	cd temp/glib && PKG_CONFIG_PATH=$(shell pwd)/../../../sysroot/lib/pkgconfig meson --cross-file cross.txt --prefix=/ -Dselinux=false -Dinstalled_tests=false -Ddtrace=disabled -Dsystemtap=disabled -Dselinux=disabled -Dlibelf=disabled -Dlibmount=disabled build
 	cd temp/glib/build && meson compile
 	mkdir -p ../sysroot
 	cd temp/glib/build && DESTDIR=$(shell pwd)/build meson install
