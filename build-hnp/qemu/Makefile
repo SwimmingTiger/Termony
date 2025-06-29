@@ -22,4 +22,4 @@ all: download/qemu-5.0
 
 download/qemu-5.0:
 	mkdir -p download
-	cd download && git clone -b stable-5.0 --recursive --depth=1 https://github.com/qemu/qemu qemu-5.0
+	cd download && git clone -b stable-5.0 --recursive --shallow-submodules --depth=1 https://github.com/qemu/qemu qemu-5.0
